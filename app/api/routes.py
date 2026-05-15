@@ -5,17 +5,6 @@ from app.utils.pdf_utils import pdf_to_base64_images
 
 router = APIRouter()
 
-@router.get("/")
-async def root():
-    return {
-        "message": "Claim Processing API",
-        "documentation": "/docs",
-        "endpoints": {
-            "POST /api/process": "Process a PDF claim document",
-            "GET /docs": "Interactive API documentation"
-        }
-    }
-
 @router.post("/process")
 async def process_claim(claim_id: str = Form(...), file: UploadFile = File(...)):
     if not file.filename.endswith(".pdf"):
