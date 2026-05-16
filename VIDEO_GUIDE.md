@@ -55,7 +55,7 @@ START → SEGREGATOR → [ID | DISCHARGE | BILL] → AGGREGATOR → END
 - Highlight the key code
 
 **Say:**
-> "First, let's see how we handle PDFs. The `pdf_to_base64_images` function takes a PDF file and converts each page into a PNG image at 150 DPI. We base64 encode these images so they can be sent to Gemini's vision API.
+> "First, let's see how we handle PDFs. The `pdf_to_base64_images` function takes a PDF file and converts each page into a PNG image at 150 DPI. We base64 encode these images so they can be sent to OPENAI's vision API.
 >
 > Why 150 DPI? It's the sweet spot between clarity and token cost — high enough to read text, but not so high that it wastes expensive API tokens."
 
@@ -77,7 +77,7 @@ def pdf_to_base64_images(pdf_bytes: bytes, dpi: int = 150) -> list[str]:
 
 **Show:** 
 - Open `app/workflow/nodes/segregator.py`
-- Show the Gemini API call
+- Show the OpenAI API call
 
 **Say:**
 > "The Segregator Agent classifies each page. Here's how it works:
@@ -107,7 +107,7 @@ for i, b64_img in enumerate(page_images):
 - Highlight the fan-out logic
 
 **Say:**
-> "After the Segregator finishes, here's the clever part: all three extraction agents run in parallel.
+> "After the Segregator finishes, all three extraction agents run in parallel.
 >
 > LangGraph's `add_conditional_edges` with a router function returns `Send` objects. We return three Send objects — one for ID Agent, one for Discharge Agent, one for Bill Agent. LangGraph starts all three simultaneously.
 >
@@ -143,9 +143,9 @@ graph.add_edge("bill_agent", "aggregator")
 **Say:**
 > "Each extraction agent follows the same pattern. Here's the ID Agent:
 >
-> It filters the segregation results to find only pages marked as identity_document. Then it sends those pages to Gemini with a prompt: 'Extract patient_name, dob, id_numbers, and policy_details. Return as JSON.'
+> It filters the segregation results to find only pages marked as identity_document. Then it sends those pages to OpenAi with a prompt: 'Extract patient_name, dob, id_numbers, and policy_details. Return as JSON.'
 >
-> Gemini looks at the page(s), finds the information, and returns it as structured JSON. We strip any markdown formatting that Gemini adds and parse the JSON. If parsing fails, we return an error.
+> OpenAi looks at the page(s), finds the information, and returns it as structured JSON. We strip any markdown formatting that OpenAi adds and parse the JSON. If parsing fails, we return an error.
 >
 > The same logic applies to Discharge Summary and Itemized Bill agents — each focuses on extracting the fields relevant to their document type."
 
@@ -211,101 +211,4 @@ result = json.loads(raw)
 >
 > Thanks for watching!"
 
----
 
-## Recording Tips
-
-### Before Recording
-1. **Close unnecessary apps** to avoid notifications
-2. **Clear desktop** for a clean look
-3. **Set font size to 16+** in VS Code (viewers need to read code)
-4. **Test audio**: Use headphones to hear yourself
-5. **Script the key points** but don't memorize word-for-word (sounds natural)
-
-### During Recording
-1. **Speak slowly and clearly** — technical content requires focus
-2. **Pause after key points** — let the viewer digest
-3. **Highlight code** while explaining
-4. **Type slowly** if live-coding (or pre-type, then demo)
-5. **Use cursor to point** at important elements
-6. **Stop and restart** if you make a big mistake (edit later)
-
-### After Recording
-1. **Edit out pauses** and mistakes
-2. **Add intro/outro** (10 seconds each)
-3. **Add captions** (auto-generated, then review)
-4. **Set thumbnail** to something eye-catching
-5. **Write description** with links to:
-   - GitHub repo
-   - README
-   - ARCHITECTURE.md
-   - Your LinkedIn/Portfolio
-
----
-
-## Video Checklist
-
-- [ ] 0:00-0:30 Introduction
-- [ ] 0:30-1:15 Architecture overview (5-node diagram)
-- [ ] 1:15-1:45 PDF to images conversion
-- [ ] 1:45-2:30 Segregator Agent explanation
-- [ ] 2:30-3:15 LangGraph parallel execution
-- [ ] 3:15-3:50 Extraction agents explanation
-- [ ] 3:50-4:30 Live demo (API call, response shown)
-- [ ] 4:30-4:50 Key takeaways
-- [ ] 4:50-5:00 Closing with links
-
----
-
-## Example Timestamps for Comments
-
-If you post the video, pin a comment with timestamps:
-
-```
-0:00 - Introduction
-0:30 - Architecture Overview
-1:15 - PDF Processing
-1:45 - Segregator Agent
-2:30 - LangGraph Parallel Execution
-3:15 - Extraction Agents
-3:50 - Live Demo
-4:30 - Key Takeaways
-4:50 - Closing
-
-Full code: https://github.com/[username]/vaishnavi-ai
-README: https://github.com/[username]/vaishnavi-ai#readme
-```
-
----
-
-## Platform Links
-
-- **Loom** (easiest for first-time recording): https://loom.com
-- **YouTube** (host video): https://youtube.com
-- **Vimeo** (alternative): https://vimeo.com
-- **LinkedIn** (share in post): https://linkedin.com
-
----
-
-## Common Questions to Address in Comments
-
-Prepare answers for these:
-
-1. **"How long does processing take?"**
-   - 30-60 seconds per multi-page PDF. Faster for single pages.
-
-2. **"Can I deploy this?"**
-   - Yes! See deployment section in README. Works on Render, Railway, Fly.io.
-
-3. **"What if I don't have pages of a certain type?"**
-   - Agents return `{"error": "no pages found"}`. System continues gracefully.
-
-4. **"How much does Gemini cost?"**
-   - ~$0.001-0.002 per claim with Gemini 2.0 Flash. Budget $0.01 for testing.
-
-5. **"Can I extract other document types?"**
-   - Yes! Add more agents following the same pattern. Show how to extend in replies.
-
----
-
-Good luck with your video! Clear, concise technical explanations paired with live demos are gold for standing out. 🎥
