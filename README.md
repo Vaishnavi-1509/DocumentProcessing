@@ -191,34 +191,51 @@ result = claim_graph.invoke(initial_state)
 assert "claim_id" in result["final_result"]
 ```
 
-## Troubleshooting
+## Deployment (Render)
 
-| Problem | Solution |
-|---------|----------|
-| "OPENAI_API_KEY not found" | Verify `.env` file exists in project root with valid key |
-| "Only PDF files accepted" | Check file has `.pdf` extension |
-| "PDF has no readable pages" | Use digital PDF (not scanned/image-based) |
-| Rate limit (429 error) | System auto-retries with exponential backoff. Wait 2+ min before retrying. |
-| Long processing time | Normal (30-60s per PDF). Parallel agents minimize latency. |
+Deploy to Render in 5 minutes:
 
-## Deployment
-
-### Docker
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+### 1. Push to GitHub
+```bash
+git add .
+git commit -m "Initial commit"
+git push origin main
 ```
 
-Set `OPENAI_API_KEY` environment variable in deployment platform.
+### 2. Create Render Service
+1. Go to https://render.com
+2. Click **"New +"** → **"Web Service"**
+3. Connect GitHub and select your repository
+4. Configure:
+   - **Name:** `claim-processor` (or your choice)
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port 8000`
 
-### Cloud Platforms
-- **Render**: Set build command as `pip install -r requirements.txt`
-- **Railway/Fly.io**: Use Dockerfile above
-- Set `OPENAI_API_KEY` in platform environment settings
+### 3. Set Environment Variables
+1. Go to **"Environment"** tab
+2. Add new variable:
+   - **Key:** `OPENAI_API_KEY`
+   - **Value:** Your OpenAI API key (from `.env`)
+3. Click **"Save"**
+
+### 4. Deploy
+- Click **"Create Web Service"**
+- Wait 2-3 minutes for deployment
+- Your live URL will be displayed
+
+### 5. Test Live API
+```bash
+# Get API info
+curl https://your-app.onrender.com/
+
+# View Swagger UI
+https://your-app.onrender.com/docs
+
+# Process a claim
+curl -X POST https://your-app.onrender.com/api/process \
+  -F "claim_id=CLM-001" \
+  -F "file=@sample.pdf"
+```
 
 ## Production Optimizations
 
@@ -236,32 +253,4 @@ Set `OPENAI_API_KEY` environment variable in deployment platform.
 4. **Why TypedDict not Pydantic?** Simpler for state management, no validation overhead for internal state
 5. **Why gpt-4o-mini with retry logic?** Cost-effective vision model; retries handle rate limits gracefully
 
-## Files Reference
 
-| File | Lines | Purpose |
-|------|-------|---------|
-| `main.py` | 13 | FastAPI app setup |
-| `routes.py` | 27 | HTTP endpoint handler |
-| `state.py` | 8 | State schema definition |
-| `graph.py` | 24 | LangGraph workflow assembly |
-| `segregator.py` | 50 | Page classification |
-| `id_agent.py` | 62 | Identity extraction |
-| `discharge_agent.py` | 62 | Discharge summary extraction |
-| `bill_agent.py` | 63 | Itemized bill extraction |
-| `aggregator.py` | 12 | Result merging |
-| `pdf_utils.py` | 15 | PDF→images conversion |
-| `retry.py` | 8 | Rate limit retry logic |
-
-**Total Core Code: ~350 lines** (very maintainable)
-
-## Next Steps
-
-- Review architecture at `/docs` Swagger UI
-- Integrate with claim management system
-- Add batch processing endpoint
-- Deploy to production cloud platform
-- Monitor via logging/observability tools
-
----
-
-**Built for portfolio/interviews** — clean, scalable, well-documented.
