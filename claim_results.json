@@ -1,0 +1,206 @@
+{
+  "claim_id": "CLM-001",
+  "segregation": {
+    "0": "claim_forms",
+    "1": "cheque_or_bank_details",
+    "2": "identity_document",
+    "3": "discharge_summary",
+    "4": "prescription",
+    "5": "investigation_report",
+    "6": "cash_receipt",
+    "7": "other",
+    "8": "itemized_bill",
+    "9": "itemized_bill",
+    "10": "investigation_report",
+    "11": "investigation_report",
+    "12": "other",
+    "13": "other",
+    "14": "other",
+    "15": "other",
+    "16": "other",
+    "17": "other"
+  },
+  "identity": {
+    "patient_name": "JOHN MICHAEL SMITH",
+    "dob": "15-MAR-1985",
+    "id_numbers": [
+      "ID-987-654-321"
+    ],
+    "policy_details": {
+      "policy_number": null,
+      "insurer": null
+    }
+  },
+  "discharge_summary": {
+    "diagnosis": "Community Acquired Pneumonia (CAP)",
+    "admit_date": "January 20, 2025",
+    "discharge_date": "January 25, 2025",
+    "physician_name": "Dr. Sarah Johnson, MD",
+    "hospital_name": "CITY MEDICAL CENTER"
+  },
+  "itemized_bill": {
+    "line_items": [
+      {
+        "description": "Room Charges - Semi-Private (5 days)",
+        "quantity": 5,
+        "unit_price": 200.0
+      },
+      {
+        "description": "Admission Fee",
+        "quantity": 1,
+        "unit_price": 150.0
+      },
+      {
+        "description": "Emergency Room Services",
+        "quantity": 1,
+        "unit_price": 500.0
+      },
+      {
+        "description": "Physician Consultation - Dr. Sarah Johnson",
+        "quantity": 5,
+        "unit_price": 150.0
+      },
+      {
+        "description": "Chest X-Ray",
+        "quantity": 2,
+        "unit_price": 120.0
+      },
+      {
+        "description": "CT Scan - Chest",
+        "quantity": 1,
+        "unit_price": 800.0
+      },
+      {
+        "description": "Complete Blood Count (CBC)",
+        "quantity": 3,
+        "unit_price": 45.0
+      },
+      {
+        "description": "Blood Culture Test",
+        "quantity": 2,
+        "unit_price": 80.0
+      },
+      {
+        "description": "Arterial Blood Gas Analysis",
+        "quantity": 1,
+        "unit_price": 95.0
+      },
+      {
+        "description": "IV Fluids - Normal Saline",
+        "quantity": 10,
+        "unit_price": 25.0
+      },
+      {
+        "description": "Injection - Ceftriaxone 1g",
+        "quantity": 5,
+        "unit_price": 30.0
+      },
+      {
+        "description": "Injection - Paracetamol",
+        "quantity": 6,
+        "unit_price": 8.0
+      },
+      {
+        "description": "Nebulization Treatment",
+        "quantity": 4,
+        "unit_price": 35.0
+      },
+      {
+        "description": "Oxygen Therapy (per hour)",
+        "quantity": 48,
+        "unit_price": 5.0
+      },
+      {
+        "description": "Nursing Care (per day)",
+        "quantity": 5,
+        "unit_price": 100.0
+      },
+      {
+        "description": "ICU Monitoring Equipment",
+        "quantity": 2,
+        "unit_price": 200.0
+      },
+      {
+        "description": "Physiotherapy Session",
+        "quantity": 3,
+        "unit_price": 60.0
+      },
+      {
+        "description": "Medical Supplies & Consumables",
+        "quantity": 1,
+        "unit_price": 250.0
+      },
+      {
+        "description": "Laboratory Processing Fee",
+        "quantity": 1,
+        "unit_price": 75.0
+      },
+      {
+        "description": "Pharmacy Dispensing Fee",
+        "quantity": 1,
+        "unit_price": 50.0
+      },
+      {
+        "description": "Amoxicillin 500mg Capsules",
+        "quantity": 21,
+        "unit_price": 1.5
+      },
+      {
+        "description": "Acetaminophen 500mg Tablets",
+        "quantity": 20,
+        "unit_price": 0.8
+      },
+      {
+        "description": "Cetirizine 10mg Tablets",
+        "quantity": 10,
+        "unit_price": 0.9
+      },
+      {
+        "description": "Omeprazole 20mg Capsules",
+        "quantity": 14,
+        "unit_price": 1.2
+      },
+      {
+        "description": "Albuterol Inhaler",
+        "quantity": 1,
+        "unit_price": 35.0
+      },
+      {
+        "description": "Vitamin D3 1000 IU",
+        "quantity": 30,
+        "unit_price": 0.4
+      },
+      {
+        "description": "Probiotic Capsules",
+        "quantity": 30,
+        "unit_price": 0.85
+      },
+      {
+        "description": "Saline Nasal Spray",
+        "quantity": 1,
+        "unit_price": 8.5
+      },
+      {
+        "description": "Antiseptic Mouthwash 250ml",
+        "quantity": 1,
+        "unit_price": 12.0
+      },
+      {
+        "description": "Digital Thermometer",
+        "quantity": 1,
+        "unit_price": 15.0
+      },
+      {
+        "description": "Medication Counseling",
+        "quantity": 1,
+        "unit_price": 25.0
+      },
+      {
+        "description": "Home Delivery Service",
+        "quantity": 1,
+        "unit_price": 10.0
+      }
+    ],
+    "total_amount": 6418.65
+  }
+}
